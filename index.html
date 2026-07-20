@@ -40,6 +40,13 @@ color:var(--w95);letter-spacing:.08em;margin-bottom:.15em;position:relative;z-in
 text-shadow:0 0 80px rgba(255,69,0,.25),0 0 160px rgba(255,69,0,.08)}
 #landing .sub{font-family:'Instrument Serif',serif;font-style:italic;
 font-size:clamp(1rem,2.2vw,1.5rem);color:var(--w40);letter-spacing:.12em;margin-bottom:3.5em}
+#landing-hint{font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.22em;
+text-transform:uppercase;color:var(--w40);text-align:center;line-height:2;white-space:nowrap;
+margin-top:2.8em;padding:0 1.5em;position:relative;z-index:2;
+animation:hintFade 1.4s ease-out .8s both}
+#landing-hint .sep{color:var(--w20);margin:0 .9em}
+@media(max-width:620px){#landing-hint{white-space:normal;max-width:22em;letter-spacing:.16em}}
+@keyframes hintFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 #begin-btn{position:relative;background:transparent;border:none;cursor:pointer;
 padding:0;width:240px;height:88px;display:flex;align-items:center;justify-content:center;
 transition:all .6s ease;filter:drop-shadow(0 0 12px rgba(255,69,0,.08))}
@@ -363,13 +370,20 @@ color:rgba(218,165,32,.35);transition:color .3s;white-space:nowrap;text-align:ce
 .votive.active .votive-name{color:rgba(218,165,32,.8);font-weight:400}
 @keyframes votivePulse{0%,100%{opacity:.9}50%{opacity:1}}
 /* About bar + modal */
-#about-bar{position:absolute;bottom:0;left:0;right:0;padding:6px 12px;
-display:flex;align-items:center;justify-content:center;
-background:linear-gradient(to top,rgba(0,0,0,.4),transparent);
-border-top:1px solid var(--w05);cursor:pointer;z-index:3}
-#about-bar span{font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.15em;
-text-transform:uppercase;color:var(--w20);transition:color .3s}
-#about-bar:hover span{color:var(--w40)}
+#about-bar{position:absolute;bottom:0;left:0;right:0;padding:8px 12px;
+display:flex;align-items:center;justify-content:center;gap:.62em;
+background:linear-gradient(to top,rgba(0,0,0,.55),transparent);
+border-top:1px solid var(--w10);cursor:pointer;z-index:3}
+#about-bar .about-mark{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+width:14px;height:14px;border-radius:50%;box-sizing:border-box;
+border:1px solid var(--w40);color:var(--w60);
+font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1;letter-spacing:0;
+transition:border-color .3s,color .3s,box-shadow .3s}
+#about-bar span:not(.about-mark){font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;
+text-transform:uppercase;color:var(--w40);transition:color .3s}
+#about-bar:hover .about-mark{border-color:rgba(218,165,32,.75);color:rgba(218,165,32,.95);
+box-shadow:0 0 7px rgba(218,165,32,.22)}
+#about-bar:hover span:not(.about-mark){color:var(--w60)}
 #about-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;
 background:rgba(0,0,0,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #about-modal.open{display:flex}
@@ -550,6 +564,7 @@ clip-path:polygon(0% 12%,5% 5%,15% 1%,50% 0%,85% 1%,95% 5%,100% 12%,100% 100%,0%
     </svg></div>
     <span class="btn-text">BEGIN</span>
   </button>
+  <div id="landing-hint">Drag relics onto the saint to compose<span class="sep">·</span>Best with sound on</div>
 </div>
 <div id="app">
   <div id="catalogue">
@@ -563,7 +578,8 @@ clip-path:polygon(0% 12%,5% 5%,15% 1%,50% 0%,85% 1%,95% 5%,100% 12%,100% 100%,0%
     <div id="relic-cabinet-wrap">
       <div id="relic-cabinet"></div>
     </div>
-    <div id="about-bar" onclick="document.getElementById('about-modal').classList.add('open')">
+    <div id="about-bar" role="button" tabindex="0" aria-label="About this reliquary" onclick="document.getElementById('about-modal').classList.add('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('about-modal').classList.add('open')}">
+      <span class="about-mark" aria-hidden="true">?</span>
       <span>About this reliquary</span>
     </div>
   </div>
